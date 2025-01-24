@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-World Scenarios</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: black;
+            /* Set background to black */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            /* Stack header and content */
+            align-items: center;
+            min-height: 100vh;
+            /* Full viewport height */
+        }
+
+        /* Header Styling */
+        header {
+            width: 100%;
+            /* Full width */
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            /* Slightly transparent background */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        /* Main Content */
+        main {
+            flex-grow: 1;
+            /* Take up remaining space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            /* Responsive width */
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        section p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #ddd;
+        }
+
+        .scenarios {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            text-align: left;
+        }
+
+        /* Interactive Elements */
+        .accordion {
+            margin: 10px 0;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .accordion:hover {
+            background: rgba(76, 158, 175, 0.7);
+        }
+
+        .accordion.active {
+            background: rgba(76, 158, 175, 1);
+        }
+
+        .panel {
+            padding: 0 15px;
+            display: none;
+            overflow: hidden;
+            text-align: left;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid rgba(76, 158, 175, 1);
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .panel p {
+            margin: 10px 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        /* Back-to-Home Button Container */
+        .back-home-container {
+            position: fixed;
+            /* Position fixed for consistent placement */
+            bottom: 20px;
+            /* Offset from the bottom */
+            right: 20px;
+            /* Offset from the right */
+            z-index: 1000;
+            /* Ensure it stays above other elements */
+        }
+
+        /* Back-to-Home Button Styling */
+        .back-home {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background: #4c9eaf;
+            /* Button color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-home:hover {
+            background: #263aaa;
+            /* Darker shade on hover */
+            transform: scale(1.1);
+            /* Slight zoom on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Real-World Scenarios</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Practice Your Cultural Skills</h2>
+            <p>Engage in real-world scenarios to test your knowledge and improve your interactions.</p>
+        </section>
+
+        <section class="scenarios">
+            <h2>Interactive Scenarios</h2>
+
+            <!-- Restaurant Scenario -->
+            <button class="accordion">Ordering Food at a Restaurant</button>
+            <div class="panel">
+                <p><strong>USA:</strong> "I'd like to order the grilled chicken, please."</p>
+                <p><strong>France:</strong> "Je voudrais un café, s'il vous plaît."</p>
+                <p><strong>Japan:</strong> "Sumimasen, o-mizu o kudasai." (Excuse me, may I have water?)</p>
+            </div>
+
+            <!-- Meeting Hosts Scenario -->
+            <button class="accordion">Greeting Hosts</button>
+            <div class="panel">
+                <p><strong>USA:</strong> Shake hands firmly and make eye contact.</p>
+                <p><strong>France:</strong> Light kiss on both cheeks or a handshake.</p>
+                <p><strong>Japan:</strong> Bow respectfully based on the situation.</p>
+            </div>
+
+            <!-- Business Etiquette Scenario -->
+            <button class="accordion">Navigating Business Etiquette</button>
+            <div class="panel">
+                <p><strong>USA:</strong> Arrive on time and start with small talk before diving into business.</p>
+                <p><strong>France:</strong> Be prepared for intellectual discussions and value formalities.</p>
+                <p><strong>Japan:</strong> Exchange business cards with both hands and bow politely.</p>
+            </div>
+        </section>
+    </main>
+    <div class="back-home-container">
+        <button class="back-home" onclick="window.location.href='game.html'">Back to Home</button>
+    </div>
+
+    <script>
+        // Accordion Functionality
+        const accordions = document.querySelectorAll(".accordion");
+
+        accordions.forEach((accordion) => {
+            accordion.addEventListener("click", () => {
+                accordion.classList.toggle("active");
+                const panel = accordion.nextElementSibling;
+
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

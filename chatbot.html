@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot - Real-World Scenarios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>AI Real-World Scenarios</h1>
+        <p>Interact with our travel assistant to prepare for real-world situations.</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="chat-container">
+        <!-- Scenario Questions -->
+        <div class="scenario-section">
+            <h2>Select a Scenario</h2>
+            <div class="scenario-questions">
+                <button class="question-button" onclick="sendPredefinedQuestion('How do I greet someone in Japan?')">
+                    Greeting in Japan
+                </button>
+                <button class="question-button" onclick="sendPredefinedQuestion('How do I order food in France?')">
+                    Ordering Food in France
+                </button>
+                <button class="question-button"
+                    onclick="sendPredefinedQuestion('What are business etiquettes in Brazil?')">
+                    Business Etiquette in Brazil
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Box -->
+        <div id="chat-box" class="chat-box">
+            <!-- Chat messages will dynamically populate here -->
+        </div>
+
+        <!-- Chat Input -->
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message here..." />
+            <button id="send-button">Send</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <button class="back-home" onclick="window.location.href='game.html'">Back to Home</button>
+    </footer>
+
+    <script src="chatbot.js"></script>
+</body>
+
+</html>

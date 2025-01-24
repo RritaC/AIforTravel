@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Levels and Badges</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Oswald', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a2a40, #0f172a);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Header Styling */
+        header {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background: rgba(20, 30, 48, 0.85);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #4c9eaf;
+            text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Section Styles */
+        section {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #4c9eaf;
+            text-align: center;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            color: #ddd;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Badge Container */
+        .badge-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Four badges per row */
+            gap: 30px; /* Space between rows and columns */
+            padding: 20px;
+            max-width: 900px; /* Restrict container width */
+            margin: 0 auto; /* Center the container */
+            margin-bottom: 50px; /* Add space below the badges */
+        }
+
+
+        /* Badge Styling */
+        .badge {
+            width: 150px;
+            height: 150px;
+            perspective: 1000px; /* Ensure 3D rotation */
+        }
+
+        /* Badge Inner - Consistent Size */
+        .badge-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .badge:hover .badge-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Front and Back Consistent Sizes */
+        .badge-front,
+        .badge-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column; /* Stack icon and text */
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Back Side Styling */
+        .badge-back {
+            background: linear-gradient(135deg, #f9f871, #f78d6d);
+            transform: rotateY(180deg);
+            font-size: 1rem;
+            padding: 10px;
+            box-sizing: border-box;
+            color: #333;
+            text-align: center;
+        }
+
+        .badge-front {
+            background: linear-gradient(135deg, #4ecdc4, #0078ff);
+        }
+
+        /* Badge Variations */
+        .badge-level2 .badge-front {
+            background: linear-gradient(135deg, #ff9f43, #ff6f61);
+        }
+
+        .badge-level3 .badge-front {
+            background: linear-gradient(135deg, #6a89cc, #4a69bd);
+        }
+
+        .badge-greatjob .badge-front {
+            background: linear-gradient(135deg, #78e08f, #38ada9);
+        }
+
+        .badge-beststudent .badge-front {
+            background: linear-gradient(135deg, #f5cd79, #e58e26);
+        }
+
+        .badge-culturalambassador .badge-front {
+            background: linear-gradient(135deg, #c44569, #9b59b6);
+        }
+
+        .badge-trailblazer .badge-front {
+            background: linear-gradient(135deg, #f6b93b, #fa983a);
+        }
+
+        .badge-worldtraveler .badge-front {
+            background: linear-gradient(135deg, #60a3bc, #3c6382);
+        }
+
+       /* Icon Style */
+        .badge-front i {
+            font-size: 2.5rem; /* Adjust size */
+            margin-bottom: 5px; /* Space below icon */
+        }
+
+        /* Add consistent padding and spacing */
+        .badge-container .badge {
+            margin: 0 auto;
+        }
+
+        .badge-front p {
+            margin: 0;
+            font-size: 1rem; /* Adjust text size */
+            font-weight: bold;
+            color: white;
+        }
+
+        .badge-front {
+            display: flex;
+            flex-direction: column; /* Stack the icon and text vertically */
+            align-items: center; /* Center align the content horizontally */
+            justify-content: center; /* Center align the content vertically */
+            text-align: center;
+            padding: 10px; /* Add padding for better spacing */
+        }        
+
+        .back-home-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            margin-bottom: 20px; /* Space below the button */
+        }
+        
+        .back-home {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background: #4c9eaf;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        
+
+        .back-home:hover {
+            background: #0078ff;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Levels and Badges</h1>
+    </header>
+    <main>
+        <!-- Levels Section -->
+        <section>
+            <h2>Levels</h2>
+            <p>Progress through levels to unlock new challenges, content, and features! Each level marks a new milestone in your journey.</p>
+        </section>
+
+        <!-- Badges Section -->
+        <section>
+            <h2>Badges</h2>
+            <p>Earn unique badges by completing tasks, challenges, and milestones. Each badge showcases your achievements and dedication!</p>
+        </section>
+
+        <!-- Badge Container -->
+        <section class="badge-container">
+            <div class="badge">
+    <div class="badge-inner">
+        <div class="badge-front">
+            <i class="fas fa-rocket"></i>
+            <p>Level 1</p>
+        </div>
+        <div class="badge-back">Starter Explorer</div>
+    </div>
+</div>
+
+            <div class="badge badge-level2">
+                <div class="badge-inner">
+                    <div class="badge-front"><i class="fas fa-trophy"></i>Level 2</div>
+                    <div class="badge-back">Intermediate Explorer</div>
+                </div>
+            </div>
+            <div class="badge badge-level3">
+                <div class="badge-inner">
+                    <div class="badge-front"><i class="fas fa-crown"></i>Level 3</div>
+                    <div class="badge-back">Advanced Explorer</div>
+                </div>
+            </div>
+            <div class="badge badge-greatjob">
+                <div class="badge-inner">
+                    <div class="badge-front"><i class="fas fa-star"></i>Great Job</div>
+                    <div class="badge-back">Amazing Performance</div>
+                </div>
+            </div>
+            <div class="badge badge-beststudent">
+                <div class="badge-inner">
+                    <div class="badge-front"><i class="fas fa-book"></i>Best Student</div>
+                    <div class="badge-back">Top of the Class</div>
+                </div>
+            </div>
+            <div class="badge badge-culturalambassador">
+                <div class="badge-inner">
+                    <div class="badge-front"><i class="fas fa-globe"></i>Cultural Ambassador</div>
+                    <div class="badge-back">Master of Diversity</div>
+                </div>
+            </div>
+            <div class="badge badge-trailblazer">
+                <div class="badge-inner">
+                    <div class="badge-front"><i class="fas fa-map"></i>Trailblazer</div>
+                    <div class="badge-back">Pathfinder Extraordinaire</div>
+                </div>
+            </div>
+            <div class="badge badge-worldtraveler">
+                <div class="badge-inner">
+                    <div class="badge-front"><i class="fas fa-plane"></i>World Traveler</div>
+                    <div class="badge-back">A World Honor</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div class="back-home-container">
+        <button class="back-home" onclick="window.location.href='game.html'">Back to Home</button>
+    </div>
+</body>
+
+</html>

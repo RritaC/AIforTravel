@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Setup - Cultural Portal Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="game.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+</head>
+
+<body>
+
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="levels-badges.html">Levels/Badges</a></li>
+            <li><a href="cultural-learning.html">Cultural Learning</a></li>
+            <li><a href="chatbot.html">AI Real-World Scenarios</a></li>
+            <li>
+                <a href="profile.html" class="profile-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png" alt="Profile Icon"
+                        class="profile-icon">
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Centered Content -->
+    <div class="game-setup">
+        <div class="game-container">
+            <h1>Begin Your Cultural Journey</h1>
+            <p>Select your destination and purpose to start exploring.</p>
+
+            <!-- Country Selection -->
+            <div class="selection">
+                <label for="country">Choose Your Country:</label>
+                <select id="country">
+                    <option value="Japan">Japan</option>
+                    <option value="France">France</option>
+                    <option value="USA">USA</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Kosovo">Kosova</option>
+                </select>
+            </div>
+
+            <!-- Purpose Selection -->
+            <div class="selection">
+                <label for="purpose">Choose Your Purpose:</label>
+                <select id="purpose">
+                    <option value="leisure">Leisure</option>
+                    <option value="business">Business</option>
+                    <option value="study">Study Abroad</option>
+                </select>
+            </div>
+
+            <button id="start-learning" class="start-button">Start Learning</button>
+        </div>
+    </div>
+    <!-- Add Particle Background -->
+    <div id="particle-container"></div>
+
+    <!-- JavaScript -->
+    <script src="particles-config.js"></script>
+    <script>
+        document.getElementById('start-learning').addEventListener('click', function () {
+            const country = document.getElementById('country').value;
+            const purpose = document.getElementById('purpose').value;
+
+            if (country && purpose) {
+                window.location.href = `play.html?country=${encodeURIComponent(country)}&purpose=${encodeURIComponent(purpose)}`;
+            } else {
+                alert("Please select both a country and a purpose before proceeding.");
+            }
+        });
+    </script>
+</body>
+
+</html>

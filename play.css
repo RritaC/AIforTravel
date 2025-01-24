@@ -1,0 +1,311 @@
+/* General Reset */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Oswald', sans-serif;
+    background: linear-gradient(to bottom, #000428, #004e92);
+    color: white;
+}
+
+/* Header Section */
+.header {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.header h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1.2rem;
+}
+
+/* Main Content Section */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Left Section */
+.content-left {
+    flex: 2;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Right Sidebar */
+.content-right {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Country Details */
+.country-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.country-detail img {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Tier Buttons */
+.tier-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    background: #4c9eaf;
+    color: white;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.tier-button:hover {
+    background: #263aaa;
+    transform: scale(1.05);
+}
+
+.tier-button:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+
+/* Quiz Content */
+#quiz-question h4 {
+    font-size: 1.5rem;
+}
+
+#quiz-result {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#quiz-score {
+    font-size: 1.3rem;
+    color: #4c9eaf;
+}
+
+#quiz-mistakes {
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Progress Bar */
+#progress-bar-container {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    margin: 20px 0;
+    height: 15px; /* Increased height */
+}
+
+#progress-bar {
+    height: 100%; /* Matches container height */
+    background: #4c9eaf;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+
+/* Quiz Card */
+#quiz-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+#quiz-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+#quiz-question ul {
+    list-style: none;
+    padding: 0;
+}
+
+#quiz-question li {
+    margin: 10px 0;
+    padding: 15px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#quiz-question li:hover {
+    background: #4c9eaf;
+    color: white;
+    transform: scale(1.05);
+}
+
+#quiz-question li.correct {
+    background: #4caf50;
+    color: white;
+}
+
+#quiz-question li.incorrect {
+    background: #ff4c4c;
+    color: white;
+}
+
+#feedback {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tier 2 Progress Bar */
+#tier2-progress-container {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin: 20px 0;
+    height: 15px;
+}
+
+#tier2-progress-bar {
+    width: 0;
+    height: 100%;
+    background: #f39c12;
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+
+
+/* Container for Tier 1 */
+.tier1-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Vertical Progress Bar */
+#tier1-progress-container {
+    width: 10px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    position: relative;
+}
+
+#tier1-progress-bar {
+    width: 100%;
+    height: 0;
+    background: #4c9eaf;
+    border-radius: 5px;
+    transition: height 0.3s ease;
+    position: absolute;
+    bottom: 0;
+}
+
+/* Steps Layout */
+.steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.step.completed {
+    background: #4caf50;
+    color: white;
+}
+
+.step:hover {
+    transform: scale(1.05);
+    background: #4c9eaf;
+    color: white;
+}
+
+.step img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.step-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.step-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+
+.mistake {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 5px solid #ff4c4c;
+    border-radius: 5px;
+}
+
+.back-home {
+    padding: 10px 20px;
+    background: #4c9eaf;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.back-home:hover {
+    background: #263aaa;
+}

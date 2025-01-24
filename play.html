@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <title>Learn About Your Destination</title>
+    <link rel="stylesheet" href="play.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <h1 id="header-title">Welcome to learning about <span id="country-name"></span>.</h1>
+        <p>These are the most important things you will need for your <span id="purpose"></span> trip.</p>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <!-- Left Section -->
+        <div class="content-left">
+            <h2 id="country-title"></h2>
+
+                        <!-- Tier 1 Content Section -->
+            <!-- Tier 1 Content Section -->
+                <div id="tier1-content" class="tier-content">
+                    <h3>Tier 1: Learn</h3>
+
+                    <div class="tier1-container">
+                        <!-- Vertical Progress Bar -->
+                        <div id="tier1-progress-container">
+                            <div id="tier1-progress-bar"></div>
+                        </div>
+
+                        <!-- Topics Steps -->
+                        <div id="tier1-steps" class="steps-container">
+                            <!-- Dynamically populated steps go here -->
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+
+
+                <div class="tier-transition">
+                    <button id="complete-tier1" class="tier-button" disabled>Complete Tier 1</button>
+                    <button id="move-to-tier2" class="tier-button" style="display: none;">Move to Tier 2</button>
+                </div>
+                
+            
+
+            <!-- Quiz Section -->
+            <div id="quiz-content" class="tier-content" style="display: none;">
+                <div id="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+                <div id="quiz-card">
+                    <div id="tier2-progress-container">
+                        <div id="tier2-progress-bar"></div>
+                    </div>
+                    
+                    <h3 id="quiz-title">Tier 2: Quiz</h3>
+                    <div id="quiz-question">
+                        <!-- Quiz questions dynamically populated here -->
+                    </div>
+                    <div id="feedback" style="display: none;"></div>
+                    <button id="next-question" class="tier-button" style="display: none;">Next Question</button>
+                </div>
+            </div>
+
+
+            <!-- Quiz Result Section -->
+            <div id="quiz-result" style="display: none;">
+                <h3>Quiz Complete!</h3>
+                <p id="quiz-score"></p>
+                <div id="quiz-mistakes">
+                    <!-- Mistakes will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="content-right">
+            <div class="country-details">
+                <div class="country-detail">
+                    <img id="country-flag" src="" alt="Country Flag">
+                    <p>Flag</p>
+                </div>
+                <div class="country-detail">
+                    <img id="country-capital" src="" alt="Capital City">
+                    <p id="capital-name"></p>
+                </div>
+                <div class="country-detail">
+                    <img id="country-leader" src="" alt="Leader">
+                    <p id="leader-name"></p>
+                </div>
+                <button class="back-home" onclick="window.location.href='game.html'">Back to Home</button>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="play.js"></script>
+</body>
+
+</html>

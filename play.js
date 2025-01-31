@@ -71,355 +71,104 @@ const countriesData = {
         }
     }
 };
-
 // Parse Query Parameters
 const urlParams = new URLSearchParams(window.location.search);
-const countryKey = urlParams.get("country")?.toLowerCase(); // Case-insensitive matching
-const purpose = urlParams.get("purpose");
+const countryKey = urlParams.get("country")?.toLowerCase();  // e.g., "usa"
+const purpose = urlParams.get("purpose");  // e.g., "business", "leisure"
 
-// Ensure country data exists
-const countryData = countriesData[countryKey];
+// Function to fetch questions from the backend dynamically
+async function fetchQuestions(country, type) {
+    const response = await fetch(`http://localhost/fetch_questions.php?country=${country}&type=${type}`);
 
-if (countryData) {
-    // Populate Header
-    document.getElementById("country-name").textContent = countryKey.toUpperCase();
-    document.getElementById("purpose").textContent = purpose;
-
-    // Populate Sidebar
-    document.getElementById("country-flag").src = countryData.flag;
-    document.getElementById("country-capital").src = countryData.capitalImage;
-    document.getElementById("capital-name").textContent = countryData.capital;
-    document.getElementById("country-leader").src = countryData.leader.image;
-    document.getElementById("leader-name").textContent = countryData.leader.name;
-
-    // Populate Tier 1 Content
-    // Dynamically populate Tier 1 steps
-    const tier1StepsContainer = document.getElementById("tier1-steps");
-    const tier1Topics = countryData.tier1;
-
-    // Create each step dynamically
-    Object.entries(tier1Topics).forEach(([key, value], index) => {
-        const step = document.createElement("div");
-        step.classList.add("step");
-        step.dataset.index = index;
-
-        step.innerHTML = `
-        <div>
-            <p class="step-title">${key.charAt(0).toUpperCase() + key.slice(1)}</p>
-            <p class="step-description">${value}</p>
-        </div>
-    `;
-
-        // Add click listener to mark step as completed
-        step.addEventListener("click", () => {
-            if (!step.classList.contains("completed")) {
-                step.classList.add("completed");
-                updateTier1Progress();
-            }
-        });
-
-        tier1StepsContainer.appendChild(step);
-    });
-
-    // Update Tier 1 progress bar
-    // Update Tier 1 progress bar and enable the "Complete Tier 1" button
-    function updateTier1Progress() {
-        const totalSteps = document.querySelectorAll(".step").length;
-        const completedSteps = document.querySelectorAll(".step.completed").length;
-
-        // Calculate progress as percentage
-        const progressHeight = (completedSteps / totalSteps) * 100;
-        document.getElementById("tier1-progress-bar").style.height = `${progressHeight}%`;
-
-        // Enable "Complete Tier 1" button if all steps are completed
-        if (completedSteps === totalSteps) {
-            const completeButton = document.getElementById("complete-tier1");
-            completeButton.disabled = false;
-        }
+    if (!response.ok) {
+        throw new Error("Failed to fetch questions from the server.");
     }
-
-    // Add event listener to "Complete Tier 1" button
-    document.getElementById("complete-tier1").addEventListener("click", () => {
-        document.getElementById("complete-tier1").style.display = "none";
-        document.getElementById("move-to-tier2").style.display = "block"; // Show Tier 2 button
-    });
-
-
-
-    // Progress tracking for Tier 1
-    let topicsCompleted = 0;
-    const totalTopics = Object.keys(tier1Topics).length;
-    const progressBar = document.getElementById("progress-bar");
-
-    // Track progress when checkboxes are clicked
-    document.querySelectorAll(".topic-checkbox").forEach((checkbox) => {
-        checkbox.addEventListener("change", () => {
-            topicsCompleted = Array.from(
-                document.querySelectorAll(".topic-checkbox:checked")
-            ).length;
-
-            // Update progress bar width
-            progressBar.style.width = `${(topicsCompleted / totalTopics) * 100}%`;
-
-            // Enable Tier 2 button if all topics are completed
-            moveToTier2Button.disabled = topicsCompleted !== totalTopics;
-        });
-    });
-
-
-    // Enable "Move to Tier 2" Button
-    const checkboxes = document.querySelectorAll(".topic-checkbox");
-    const moveToTier2Button = document.getElementById("move-to-tier2");
-
-    checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener("change", () => {
-            const allChecked = Array.from(checkboxes).every((cb) => cb.checked);
-            moveToTier2Button.disabled = !allChecked;
-        });
-    });
-
-    moveToTier2Button.addEventListener("click", () => {
-        document.getElementById("tier1-content").style.display = "none"; // Hide Tier 1 content
-        document.getElementById("quiz-content").style.display = "block"; // Show Quiz content
-        moveToTier2Button.style.display = "none"; // Hide the "Move to Tier 2" button
-        loadQuizQuestion();
-    });
-} else {
-    alert("Country not found. Redirecting to the main page.");
-    window.location.href = "game.html";
+    return response.json();
 }
 
-// Quiz Questions Data
-const quizQuestions = {
-    kosovo: [
-        { question: "What is a common greeting in Kosovo?", options: ["A handshake", "A bow", "A high-five"], correct: 0 },
-        { question: "What is the capital of Kosovo?", options: ["Pristina", "Peja", "Gjakova"], correct: 0 },
-        { question: "Who is the current president of Kosovo?", options: ["Hashim Thaçi", "Vjosa Osmani", "Albin Kurti"], correct: 1 },
-        { question: "What is a key part of hospitality in Kosovo?", options: ["Offering coffee or tea", "Exchanging gifts", "Dancing"], correct: 0 },
-        { question: "What traditional dance is popular in Kosovo?", options: ["Sirtaki", "Valle", "Tango"], correct: 1 },
-        { question: "What is a cultural value in Kosovo?", options: ["Individualism", "Hospitality", "Minimal interaction"], correct: 1 },
-        { question: "What is an important part of celebrations in Kosovo?", options: ["Sports", "Folk music and dance", "Silent gatherings"], correct: 1 }
-    ],
-
-    brazil: [
-        { question: "What is a common greeting in Brazil?", options: ["A bow", "A firm handshake", "A hug and a kiss on the cheek"], correct: 2 },
-        { question: "What is expected during meals in Brazil?", options: ["Silence", "Lively conversations", "Quick eating"], correct: 1 },
-        { question: "What is considered important in Brazilian culture?", options: ["Strict punctuality", "Personal connections", "Minimal expression"], correct: 1 },
-        { question: "How many kisses might you give when greeting a friend in Brazil?", options: ["One or two", "Three", "None"], correct: 0 },
-        { question: "What is Brazil's capital?", options: ["Rio de Janeiro", "Brasília", "São Paulo"], correct: 1 },
-        { question: "What is the name of Brazil’s current leader?", options: ["Jair Bolsonaro", "Dilma Rousseff", "Luiz Inácio Lula da Silva"], correct: 2 },
-        { question: "What should you do if you’re late for a business meeting in Brazil?", options: ["Apologize sincerely", "Ignore it", "Offer an excuse"], correct: 0 }
-    ],
-    usa: [
-        { question: "What is a typical greeting in the USA?", options: ["A firm handshake", "A bow", "A kiss on the cheek"], correct: 0 },
-        { question: "How much should you tip in a restaurant in the USA?", options: ["5%", "15-20%", "Tipping isn’t necessary"], correct: 1 },
-        { question: "What is the capital of the USA?", options: ["Washington, D.C.", "New York", "Los Angeles"], correct: 0 },
-        { question: "Who is the current president of the USA?", options: ["Donald Trump", "Kamala Harris", "Joe Biden"], correct: 2 },
-        { question: "What do Americans value in social settings?", options: ["Silence", "Small talk", "Standing very close"], correct: 1 },
-        { question: "What is a common restaurant etiquette in the USA?", options: ["No talking", "Tipping", "Sharing meals"], correct: 1 },
-        { question: "How should you greet someone in a professional setting in the USA?", options: ["A firm handshake", "A hug", "A kiss"], correct: 0 }
-    ],
-    japan: [
-        { question: "What is the traditional greeting in Japan?", options: ["A handshake", "Bowing", "A wave"], correct: 1 },
-        { question: "What should you remove when entering a Japanese home?", options: ["A hat", "Shoes", "Coat"], correct: 1 },
-        { question: "What is the capital of Japan?", options: ["Tokyo", "Kyoto", "Osaka"], correct: 0 },
-        { question: "Who is the current leader of Japan?", options: ["Shinzo Abe", "Fumio Kishida", "Yoshihide Suga"], correct: 1 },
-        { question: "How should you present a gift in Japan?", options: ["With one hand", "With both hands", "By tossing it"], correct: 1 },
-        { question: "What does bowing signify in Japan?", options: ["Respect", "Anger", "Excitement"], correct: 0 },
-        { question: "What is a key cultural value in Japan?", options: ["Politeness and silence", "Loud expressions", "Tipping generously"], correct: 0 }
-    ],
-    france: [
-        { question: "How do friends greet each other in France?", options: ["A handshake", "A kiss on both cheeks", "A wave"], correct: 1 },
-        { question: "What should you say before starting a conversation?", options: ["Nothing", "Bonjour", "Salut"], correct: 1 },
-        { question: "What is the capital of France?", options: ["Paris", "Lyon", "Marseille"], correct: 0 },
-        { question: "Who is the current leader of France?", options: ["Nicolas Sarkozy", "Emmanuel Macron", "François Hollande"], correct: 1 },
-        { question: "What is a key dining etiquette in France?", options: ["Keep your hands on the table", "Use your elbows", "Finish quickly"], correct: 0 },
-        { question: "What does 's’il vous plaît' mean?", options: ["Please", "Thank you", "Hello"], correct: 0 },
-        { question: "How should you approach dining in France?", options: ["Quickly", "Quietly", "Slowly and socially"], correct: 2 }
-    ]
-};
-
-
-const quizQuestionDiv = document.getElementById("quiz-question");
-const nextQuestionButton = document.getElementById("next-question");
-const backToHomeButton = document.createElement("button");
-const moveToTier1Button = document.createElement("button");
-const quizResultDiv = document.getElementById("quiz-result");
-
-const badgeDisplayDiv = document.createElement("div");
-badgeDisplayDiv.id = "badge-display";
-
-
-// Configure Back to Home Button
-backToHomeButton.textContent = "Back to Home";
-backToHomeButton.style.padding = "10px 20px";
-backToHomeButton.style.background = "#4c9eaf";
-backToHomeButton.style.color = "white";
-backToHomeButton.style.border = "none";
-backToHomeButton.style.borderRadius = "5px";
-backToHomeButton.style.cursor = "pointer";
-backToHomeButton.style.marginTop = "20px";
-backToHomeButton.addEventListener("click", () => {
-    window.location.href = "game.html";
-});
-
-// Configure Move to Tier 1 Button
-moveToTier1Button.textContent = "Move to Tier 1";
-moveToTier1Button.style.padding = "10px 20px";
-moveToTier1Button.style.background = "#4c9eaf";
-moveToTier1Button.style.color = "white";
-moveToTier1Button.style.border = "none";
-moveToTier1Button.style.borderRadius = "5px";
-moveToTier1Button.style.cursor = "pointer";
-moveToTier1Button.style.marginTop = "20px";
-moveToTier1Button.addEventListener("click", () => {
-    document.getElementById("tier1-content").style.display = "block";
-    document.getElementById("quiz-content").style.display = "none";
-});
+// Start the quiz by fetching questions from the backend
+if (countryKey && purpose) {
+    fetchQuestions(countryKey, purpose)
+        .then((questions) => {
+            loadQuiz(questions);  // Load quiz using the fetched questions
+        })
+        .catch((error) => {
+            console.error("Error fetching questions:", error);
+            alert("Unable to load questions. Please try again.");
+        });
+} else {
+    alert("Country or purpose is missing in the URL.");
+    window.location.href = "game.html";  // Redirect if parameters are missing
+}
 
 let currentQuestionIndex = 0;
 let score = 0;
+let questions = [];  // Store fetched questions
 
-// Update Progress Bar
-// Update Tier 2 progress bar
-function updateTier2Progress() {
-    const totalQuestions = quizQuestions[countryKey].length;
-    const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
-    document.getElementById("tier2-progress-bar").style.width = `${progress}%`;
+// Load quiz questions dynamically
+function loadQuiz(fetchedQuestions) {
+    questions = fetchedQuestions;  // Store fetched questions globally
+    loadQuizQuestion();  // Start quiz with the first question
 }
 
-
-// Load Quiz Questions
 function loadQuizQuestion() {
-    const countryQuiz = quizQuestions[countryKey];
-    if (currentQuestionIndex < countryQuiz.length) {
-        const currentQuestion = countryQuiz[currentQuestionIndex];
+    if (currentQuestionIndex < questions.length) {
+        const currentQuestion = questions[currentQuestionIndex];
         const quizQuestionDiv = document.getElementById("quiz-question");
+
         quizQuestionDiv.innerHTML = `
             <h4>${currentQuestion.question}</h4>
             <ul>
                 ${currentQuestion.options
-                .map(
-                    (option, index) => `<li data-index="${index}">${option}</li>`
-                )
-                .join("")}
+                    .map((option, index) => `<li data-index="${index}">${option}</li>`)
+                    .join("")}
             </ul>
         `;
 
-        // Add Click Event Listeners to Options
         document.querySelectorAll("#quiz-question li").forEach((option) => {
             option.addEventListener("click", () => handleAnswer(option));
         });
 
-        // Hide Feedback and Next Button Initially
         document.getElementById("feedback").style.display = "none";
         document.getElementById("next-question").style.display = "none";
-
-        // Update Progress Bar
-        updateTier2Progress();
     } else {
-        // Show Final Score
-        document.getElementById("quiz-content").style.display = "none";
-        const quizResultDiv = document.getElementById("quiz-result");
-        quizResultDiv.style.display = "block";
-        quizResultDiv.innerHTML = `
-            <h3>Quiz Complete!</h3>
-            <p>Your score: ${score} / ${countryQuiz.length}</p>
-            <button class="tier-button" onclick="window.location.href='game.html'">Back to Home</button>
-            
-        `;
-
-        const badgeClass = getBadgeForScore(score);
-        displayBadge(badgeClass);
+        showQuizResult();  // No more questions, show final result
     }
 }
 
-
-
-// Handle Answer Selection
 function handleAnswer(selectedOption) {
     const selectedIndex = parseInt(selectedOption.dataset.index);
-    const currentQuestion = quizQuestions[countryKey][currentQuestionIndex];
+    const currentQuestion = questions[currentQuestionIndex];
 
-    // Highlight Correct and Incorrect Answers
     if (selectedIndex === currentQuestion.correct) {
         selectedOption.classList.add("correct");
-        document.getElementById("feedback").textContent = "Correct! 🎉";
         score++;
     } else {
         selectedOption.classList.add("incorrect");
-        document.getElementById("feedback").textContent = "Incorrect! 😢";
     }
 
-    document.getElementById("feedback").style.display = "block";
-
-    // Disable Further Selection
     document.querySelectorAll("#quiz-question li").forEach((option) => {
-        option.style.pointerEvents = "none";
+        option.style.pointerEvents = "none";  // Disable further selection
         if (parseInt(option.dataset.index) === currentQuestion.correct) {
-            option.classList.add("correct");
+            option.classList.add("correct");  // Highlight correct answer
         }
     });
 
-    // Show Next Button
-    document.getElementById("next-question").style.display = "block";
+    document.getElementById("next-question").style.display = "block";  // Show "Next" button
 }
 
-// On "Next Question" Button Click
+// Proceed to next question
 document.getElementById("next-question").addEventListener("click", () => {
     currentQuestionIndex++;
     loadQuizQuestion();
 });
 
-// Dynamically Load and Display Badges from levels-badges.html
-function loadBadges(score) {
-    // Fetch the levels-badges.html file
-    fetch("levels-badges.html")
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Failed to fetch levels-badges.html");
-            }
-            return response.text();
-        })
-        .then((html) => {
-            // Parse the HTML content
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-
-            // Find the badge container in the fetched HTML
-            const badgeContainer = doc.querySelector(".badge-container");
-            if (badgeContainer) {
-                // Determine which badge to display based on the score
-                const badgeClass = getBadgeForScore(score);
-                const selectedBadge = badgeContainer.querySelector(`.${badgeClass}`);
-
-                if (selectedBadge) {
-                    // Clone the selected badge
-                    const badgeClone = selectedBadge.cloneNode(true);
-
-                    // Append the badge to the quiz result div
-                    const quizResultDiv = document.getElementById("quiz-result");
-                    quizResultDiv.appendChild(badgeClone);
-                } else {
-                    console.error(`Badge with class ${badgeClass} not found in levels-badges.html.`);
-                }
-            } else {
-                console.error("Badge container not found in levels-badges.html.");
-            }
-        })
-        .catch((error) => {
-            console.error("Error loading badges:", error);
-        });
+// Show final quiz result
+function showQuizResult() {
+    const quizResultDiv = document.getElementById("quiz-result");
+    quizResultDiv.innerHTML = `
+        <h3>Quiz Complete!</h3>
+        <p>Your score: ${score} / ${questions.length}</p>
+        <button onclick="window.location.href='game.html'">Back to Home</button>
+    `;
 }
-
-// Helper Function: Determine Badge Class Based on Score
-function getBadgeForScore(score) {
-    if (score >= 7) return "badge-worldtraveler";
-    if (score >= 5) return "badge-trailblazer";
-    if (score >= 3) return "badge-level3";
-    return "badge-level1";
-}
-
-
-// Initialize Quiz
-loadQuizQuestion();
